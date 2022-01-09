@@ -1,7 +1,7 @@
 {
-  "name": "beefy-api",
+  "name": "autocomp-api",
   "version": "1.0.0",
-  "repository": "blockcashfinance/blockcash-api",
+  "repository": "autocompfinance/autocomp-api",
   "license": "MIT",
   "scripts": {
     "install-all": "yarn && cd packages/address-book && yarn",

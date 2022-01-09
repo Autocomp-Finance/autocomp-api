@@ -6,7 +6,7 @@ const MULTICALLS = {
   42220: "0xE99c8A590c98c7Ae9FB3B7ecbC115D2eBD533B50",
 };
 
-const MulticallAbi = require("../abis/BlockcashPriceMulticall.json");
+const MulticallAbi = require("../abis/AutocompPriceMulticall.json");
 const ERC20 = require("../abis/common/ERC20/ERC20.json");
 const BATCH_SIZE = 128;
 

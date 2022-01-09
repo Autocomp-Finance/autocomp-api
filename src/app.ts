@@ -28,4 +28,4 @@ app.use(router.allowedMethods());
 
 const port = process.env.PORT || 3000;
 app.listen(port);
-console.log(`> blockcash-api running! (:${port})`);
+console.log(`> autocomp-api running! (:${port})`);

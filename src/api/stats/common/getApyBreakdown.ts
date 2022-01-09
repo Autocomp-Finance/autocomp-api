@@ -13,7 +13,7 @@ import {
 export interface ApyBreakdown {
   vaultApr?: number;
   compoundingsPerYear?: number;
-  blockcashPerformanceFee?: number;
+  autocompPerformanceFee?: number;
   vaultApy?: number;
   lpFee?: number;
   tradingApr?: number;
@@ -61,7 +61,7 @@ export const getApyBreakdown = (
     result.apyBreakdowns[pool.name] = {
       vaultApr: vaultApr,
       compoundingsPerYear: BASE_HPY,
-      blockcashPerformanceFee: performanceFee,
+      autocompPerformanceFee: performanceFee,
       vaultApy: vaultApy,
       lpFee: providerFee,
       tradingApr: tradingApr,
