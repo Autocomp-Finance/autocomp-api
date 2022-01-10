@@ -2,8 +2,10 @@
 
 import { fetchAmmPrices } from "../../utils/fetchAmmPrices";
 // import { fetchMooPrices } from '../../utils/fetchMooPrices';
+import { fetchCoinGeckoPrices } from "../../utils/fetchCoinGeckoPrices";
 
 import sushiCeloPools from "../../data/celo/sushiLpPools.json";
+import sushiv2Celo from "../../data/celo/sushiv2LpPools.json";
 import ubeswapCeloPools from "../../data/celo/ubeswapLpPools.json";
 
 const INIT_DELAY = 0 * 60 * 1000;
@@ -11,7 +13,9 @@ const REFRESH_INTERVAL = 5 * 60 * 1000;
 
 // FIXME: if this list grows too big we might hit the ratelimit on initialization everytime
 // Implement in case of emergency -> https://github.com/beefyfinance/beefy-api/issues/103
-const pools = [...ubeswapCeloPools, ...sushiCeloPools];
+const pools = [...ubeswapCeloPools, ...sushiCeloPools, ...sushiv2Celo];
+
+const coinGeckoCoins = ["SUSHI"];
 
 const knownPrices = {
   BUSD: 1,
@@ -23,6 +27,7 @@ const knownPrices = {
   USDN: 1,
   cUSD: 1,
   mcUSD: 1,
+  asUSDC: 1,
 };
 
 let tokenPricesCache: Promise<any>;
@@ -31,6 +36,8 @@ let lpPricesCache: Promise<any>;
 const updateAmmPrices = async () => {
   console.log("> updating amm prices");
   try {
+    const coinGeckoPrices = fetchCoinGeckoPrices(coinGeckoCoins);
+    const gecko = await coinGeckoPrices;
     const ammPrices = fetchAmmPrices(pools, knownPrices);
 
     // const mooPrices = ammPrices.then(async ({ poolPrices, tokenPrices }) => {
@@ -40,7 +47,11 @@ const updateAmmPrices = async () => {
     const tokenPrices = ammPrices.then(async ({ _, tokenPrices }) => {
       // const mooTokenPrices = await mooPrices;
       const mCELO = tokenPrices["CELO"];
-      return { ...tokenPrices, mCELO /*...mooTokenPrices */ };
+      return {
+        ...tokenPrices,
+        mCELO,
+        ...{ SUSHI: gecko.sushi } /*...mooTokenPrices */,
+      };
     });
 
     const lpPrices = ammPrices.then(async ({ poolPrices, _ }) => {

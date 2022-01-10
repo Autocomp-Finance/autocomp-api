@@ -1,30 +1,38 @@
-import { celoWeb3 } from '../../../utils/web3';
-import { CELO_CHAIN_ID } from '../../../constants';
+import { celoWeb3 } from "../../../utils/web3";
+import { CELO_CHAIN_ID } from "../../../constants";
 
-import { getSushiApys } from '../common/getSushiApys';
-import { sushiCeloClient } from '../../../apollo/client';
+import { getMiniChefApys } from "../common/getMiniChefApys";
+import { sushiCeloClient } from "../../../apollo/client";
 
-import pools from '../../../data/celo/sushiLpPools.json';
+import pools from "../../../data/celo/sushiv2LpPools.json";
+import SushiMiniChefV2 from "../../../abis/sushi/SushiMiniChefV2.json";
+import { AbiItem } from "web3-utils";
 
-import { addressBook } from '../../../../packages/address-book/address-book';
+import { addressBook } from "../../../../packages/address-book/address-book";
 const {
   celo: {
     platforms: {
-      sushiCelo: { minichef, complexRewarderTime },
+      sushiCelo: { minichef, complexRewarderTimerv2 },
     },
-    tokens: { cSUSHI, CELO },
+    tokens: { SUSHIV2, CELO },
   },
 } = addressBook;
 
 export const getSushiCeloApys = () => {
-  return getSushiApys({
-    minichef,
-    complexRewarderTime,
-    sushiOracleId: cSUSHI.symbol,
-    nativeOracleId: CELO.symbol,
-    nativeTotalAllocPoint: 9600,
+  return getMiniChefApys({
+    minichefConfig: {
+      minichef,
+      minichefAbi: SushiMiniChefV2 as AbiItem[],
+      outputOracleId: SUSHIV2.symbol,
+      tokenPerSecondContractMethodName: "sushiPerSecond",
+    },
+    rewarderConfig: {
+      rewarder: complexRewarderTimerv2,
+      rewarderTokenOracleId: CELO.symbol,
+      rewarderTotalAllocPoint: 10200,
+    },
     pools,
-    sushiClient: sushiCeloClient,
+    tradingClient: sushiCeloClient,
     web3: celoWeb3,
     chainId: CELO_CHAIN_ID,
   });

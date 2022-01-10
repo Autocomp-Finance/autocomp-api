@@ -1,0 +1,21 @@
+[
+  {
+    "name": "sushi-celo-cusd-usdc",
+    "address": "0xA364EdE5590B46E618527d7535506743D978bBF2",
+    "decimals": "1e18",
+    "poolId": 5,
+    "chainId": 42220,
+    "lp0": {
+      "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+      "oracle": "tokens",
+      "oracleId": "cUSD",
+      "decimals": "1e18"
+    },
+    "lp1": {
+      "address": "0xef4229c8c3250C675F21BCefa42f58EfbfF6002a",
+      "oracle": "tokens",
+      "oracleId": "USDC",
+      "decimals": "1e6"
+    }
+  }
+]

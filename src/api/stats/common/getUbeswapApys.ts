@@ -12,7 +12,7 @@ import { LpPool } from "../../../types/LpPool";
 import { SUSHI_LPF } from "../../../constants";
 import { getTradingFeeApr } from "../../../utils/getTradingFeeApr";
 import { NormalizedCacheObject } from "apollo-cache-inmemory";
-import { ApolloClient } from "apollo-client";
+import { ApolloClient } from "@apollo/client/core";
 
 // abis
 import PoolManager from "../../../abis/ubeswap/pool-manager.json";
